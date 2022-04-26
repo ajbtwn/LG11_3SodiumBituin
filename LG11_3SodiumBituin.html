@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>YOUR FILE</title>
+
+	<meta charset="UTF-8">
+	<meta name="author" content="Alyssa Bituin">
+	<meta name="keywords" content="Processing Online Forms">
+	<meta name="revised" content="26-04-2022">
+
+    <style>
+        * {
+            font-family: Courier;
+        }
+        body {
+            margin: 0 60px;
+        }
+
+        #file {
+            border: 5px solid rgba(161, 161, 161, 0.523);
+            padding:0px 40px;
+            width:48%;
+            height:408px;
+            margin: 8px 0 8px 40px;
+            float:left;
+        }
+    </style>
+</head>
+
+<body>
+    <p style="text-align:center; text-transform:uppercase; font-weight:bold; font-size:40px; margin:40px 0 20px 0;">Welcome to the Association of Associates</p>
+	<form id="info" onsubmit="return printInfo();" onreset="window.location.reload()">
+        <fieldset form="info" style="padding-top:15px; margin-bottom:40px; float:left;">
+            <legend>Please enter your personal information</legend>
+
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" onblur="turnRed(id)" onfocus="turnGreen(id)"><br><br>
+
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" onblur="turnRed(id)" onfocus="turnGreen(id)"><br><br>
+
+            <label for="gender">Gender:</label>
+            <select name="gender" id="gender" onblur="turnRed(id)" onfocus="turnGreen(id)" onchange="specifyGender();">
+                <option hidden disabled selected value> -- select an option -- </option>
+                <option value="Female">Female</option>
+                <option value="Male">Male</option>
+                <option value="Other">Other</option>
+                <option value="Unknown">Prefer not to mention</option>
+            </select><br><br>
+            <div id="ifOther" style="display: none; margin-left:10px;">
+                <label for="specify">Specify:</label>
+                <input type="text" name="specify" id="specify" onblur="turnRed(id)" onfocus="turnGreen(id)"><br><br>
+            </div>
+
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" onblur="turnRed(id)" onfocus="turnGreen(id)"><br><br>
+
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" onblur="turnRed(id)" onfocus="turnGreen(id)"><br><br>
+
+            <label for="address">Address:</label><br>
+            <input style="width:350px;" type="address" id="address" name="address" onblur="turnRed(id)" onfocus="turnGreen(id)"><br><br>
+        
+            <label for="interests">Interests:</label><br>
+            <textarea type="interests" id="interests" name="interests" cols="50" rows="4" onblur="turnRed(id)" onfocus="turnGreen(id)"></textarea><br><br>
+        
+            <input type="reset" value="Reset">
+            <input type="submit" value="Submit">
+        </fieldset>
+	</form>
+
+    <div id="file" style="position:relative; opacity:0;">
+        <img style="width:40%; float:right; position:relative; top:-15px;" src="face.png">
+        <p id="namePrint" style="text-transform:uppercase; font-weight:bold; font-size:40px; margin-bottom:-15px; width:60%;"></p>
+        <p id="usernamePrint"></p>
+        <p id="genderPrint" style="margin-top:30px;"></p>
+        <p id="emailPrint"></p>
+        <p id="passwordPrint"></p>
+        <p id="addressPrint"></p>
+        <p id="interestsPrint"></p>
+        <img style="width:17%; float:right; position:absolute; bottom:15px; right:25px;" src="logo.png">
+        <!--Design inspired by Lemony Snicket's All the Wrong Questions
+            Images Source: https://images.app.goo.gl/5monDZsiKwK1iwC56-->
+    </div>
+</body>
+
+<script>
+    function turnRed(id) {
+        let x = document.getElementById(id).value;
+        if (x == "") {
+            document.getElementById(id).style.borderColor = "red";
+        }
+    }
+
+    function turnGreen(id) {
+        document.getElementById(id).style.borderColor = "green";
+    }
+
+    function specifyGender() {
+        if (document.getElementById("gender").value == "Other") {
+            document.getElementById("ifOther").style.display = "block";
+        }
+        else {
+            document.getElementById("ifOther").style.display = "none";
+        }
+    }
+
+    function printInfo() {
+        document.getElementById("file").style.opacity = "1";
+        document.getElementById("namePrint").innerHTML = document.getElementById("name").value;
+        document.getElementById("usernamePrint").innerHTML = document.getElementById("username").value;
+        if (document.getElementById("gender").value != "Other") {
+            document.getElementById("genderPrint").innerHTML = "<b>Gender: </b>" + document.getElementById("gender").value;
+        }
+        else {
+            document.getElementById("genderPrint").innerHTML = "<b>Gender: </b>" + document.getElementById("specify").value;
+        }
+        document.getElementById("emailPrint").innerHTML = "<b>Email: </b>" + document.getElementById("email").value;
+        document.getElementById("passwordPrint").innerHTML = "<b>Password: </b>" + document.getElementById("password").value;
+        document.getElementById("addressPrint").innerHTML = "<b>Address: </b>" + document.getElementById("address").value;
+        document.getElementById("interestsPrint").innerHTML = "<b>Interests: </b>" + document.getElementById("interests").value;
+        return false;
+    }
+</script>
+
+</html>
